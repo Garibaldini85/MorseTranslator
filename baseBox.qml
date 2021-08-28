@@ -29,7 +29,7 @@ Item {
 
 
 
-        ScrollView
+        FocusScope
         {
             clip: true
             x: parent.radius / 3.14
@@ -37,7 +37,7 @@ Item {
             width: parent.width - parent.radius / 3.14 * 2
             height: parent.height - parent.radius / 3.14 * 2
 
-            FocusScope {
+             ScrollView {
                 anchors.fill: parent
 
                 TextArea {
@@ -48,10 +48,11 @@ Item {
                     color: "#003d34"
                     text: textBox
                     readOnly: isRO
-                    wrapMode: TextEdit.Wrap
+                    wrapMode: TextEdit.WrapAtWordBoundaryOrAnywhere
                     onTextChanged: {
                         if (isEmitedSignal) {
-                            if (Math.abs(text - oldString) > 1)
+                            console.log()
+                            if (Math.abs(text.length - oldString.length) > 1)
                                 baseTextChanged(1, text)
                             else
                                 baseTextChanged(0, text)
@@ -80,6 +81,10 @@ Item {
                     KeyNavigation.tab: itemKeyNav
                 }
             }
+             MouseArea {
+                 anchors.fill: parent
+                 onClicked: { textArea.forceActiveFocus(); }
+             }
         }
     }
 
