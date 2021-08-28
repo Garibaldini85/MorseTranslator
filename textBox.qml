@@ -3,29 +3,22 @@ import QtQuick 2.0
 import "qml.qrc:/BaseBox.qml"
 
 Item {
-    property string text: "text"
+    property string text    : ""
+    property bool   readonly: false
 
-    signal boxTextChanged (string text)
-
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            console.log("click")
-            baseBox.setCursor(mouseX, mouseY)
-        }
+    signal boxTextChanged (int code, string text)
 
     BaseBox {
         id: baseBox
         anchors.fill: parent
         textBox: text
-        isRO: false
+        isRO: readonly
         isEmitedSignal: true
         horAlig: Text.AlignLeft
         verAlig: Text.AlignTop
 
         onBaseTextChanged: {
-            boxTextChanged (baseText)
+            boxTextChanged (code, baseText)
         }
-    }
     }
 }
