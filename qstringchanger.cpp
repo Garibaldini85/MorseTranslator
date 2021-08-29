@@ -58,7 +58,7 @@ void QStringChanger::latOneChanging(const QString &text, const int &position)
 
     emit retStr(textToMorze());
 }
-//aaa
+
 void QStringChanger::latSevChanging(const QString &text, const int &position)
 {
     if (oldText.size() < text.size()) {
@@ -69,32 +69,11 @@ void QStringChanger::latSevChanging(const QString &text, const int &position)
             _position += 1;
         }
     } else {
-        int _position = position + (oldText.size() - text.size());
+        int _position = position;
         while (oldText.size() > text.size()) {
             oldMorze.erase(oldMorze.begin() + _position);
             oldText.remove(_position, 1);
-            _position += 1;
         }
     }
-
-
-//    if (text.size() == 0) {
-//        oldMorze.clear();
-//        oldText.clear();
-//    }
-//    for ( int i = 0; i < text.size(); i++) {
-//        if (oldText.size() <= i) {
-//            oldMorze.append( extraMorze ( text [i] ) );
-//            oldText.append(text[i]);
-//        } else if ( oldText[i].toUpper() != text[i].toUpper() ) {
-//            if (oldText.size() < text.size()) {
-//                oldMorze.insert(oldMorze.begin() + i, extraMorze(text[i]));
-//                oldText.insert(i, text[i]);
-//            } else {
-//                oldMorze.erase(oldMorze.begin() + i);
-//                oldText.remove(i, 1);
-//            }
-//        }
-//    }
     emit retStr(textToMorze());
 }
