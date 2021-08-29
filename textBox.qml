@@ -6,7 +6,7 @@ Item {
     property string text    : ""
     property bool   readonly: false
 
-    signal boxTextChanged (int code, string text)
+    signal boxTextChanged (int code, int position, string text)
 
     BaseBox {
         id: baseBox
@@ -16,9 +16,9 @@ Item {
         isEmitedSignal: true
         horAlig: Text.AlignLeft
         verAlig: Text.AlignTop
-
+        isSelecting: true
         onBaseTextChanged: {
-            boxTextChanged (code, baseText)
+            boxTextChanged (code, basePosition, baseText)
         }
     }
 }

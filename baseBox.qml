@@ -8,6 +8,7 @@ Item {
     property string colorText      : "#003d34"
     property bool   isEmitedSignal : false
     property bool   isRO           : true
+    property bool   isSelecting    : false
     property int    horAlig        : Text.AlignHCenter
     property int    verAlig        : Text.AlignVCenter
     property string oldString      : ""
@@ -18,7 +19,7 @@ Item {
      * 1 past
      * 2 cut
      */
-    signal baseTextChanged(int code, string baseText)
+    signal baseTextChanged(int code, int basePosition, string baseText)
 
     Rectangle {
         anchors.fill: parent
@@ -49,15 +50,16 @@ Item {
                     text: textBox
                     readOnly: isRO
                     wrapMode: TextEdit.WrapAtWordBoundaryOrAnywhere
+                    selectByKeyboard: isSelecting
+                    selectByMouse: isSelecting
                     onTextChanged: {
                         if (isEmitedSignal) {
-                            console.log()
+                            //console.log(cursorPosition)
                             if (Math.abs(text.length - oldString.length) > 1)
-                                baseTextChanged(1, text)
+                                baseTextChanged(1, cursorPosition, text)
                             else
-                                baseTextChanged(0, text)
+                                baseTextChanged(0, cursorPosition, text)
                             oldString = text
-
                         }
                     }
 
@@ -81,10 +83,10 @@ Item {
                     KeyNavigation.tab: itemKeyNav
                 }
             }
-             MouseArea {
-                 anchors.fill: parent
-                 onClicked: { textArea.forceActiveFocus(); }
-             }
+//             MouseArea {
+//                 anchors.fill: parent
+//                 onClicked: { textArea.forceActiveFocus(); }
+//             }
         }
     }
 

@@ -7,13 +7,13 @@ QMorzeCore::QMorzeCore(QObject *parent) : QObject(parent)
             this,    &QMorzeCore::recStr);
 }
 
-void QMorzeCore::changeString(QString lang, int code, QString text)
+void QMorzeCore::changeString(QString lang, int code, int position, QString text)
 {
     if (lang == "lat") {
         if (code == 0)
-            QtConcurrent::run(changer, &QStringChanger::latOneChanging, text);
+            QtConcurrent::run(changer, &QStringChanger::latOneChanging, text, position);
         else
-            QtConcurrent::run(changer, &QStringChanger::latSevChanging, text);
+            QtConcurrent::run(changer, &QStringChanger::latSevChanging, text, position);
     }
 }
 

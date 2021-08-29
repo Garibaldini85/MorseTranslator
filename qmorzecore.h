@@ -16,7 +16,7 @@ private:
     QStringChanger *changer;
 
 public slots:
-    void changeString(QString lang, int code, QString text);
+    void changeString(QString lang, int code, int position, QString text);
     void recStr(QString str);
 
 signals:

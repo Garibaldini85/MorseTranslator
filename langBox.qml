@@ -8,6 +8,7 @@ Item {
     BaseBox {
         anchors.fill: parent
         textBox: lang
+        //isRO: false
     }
 }
 /*##^##

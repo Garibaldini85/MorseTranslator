@@ -1,5 +1,6 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtQuick.Controls 2.12
 
 import "qml.qrc:/TextBox.qml"
 import "qml.qrc:/LangBox.qml"
@@ -10,8 +11,8 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
-    property var activeItem  : latTextBox
-    property var inactiveItem: morzeTextBox
+    property var activeItem  : firTextBox
+    property var inactiveItem: secTextBox
 
     Connections {
         target: MCore
@@ -21,23 +22,43 @@ Window {
         }
     }
 
+    Button {
+        x: parent.width * 0.4 + 2
+        y: 2
+        width: parent.width * 0.2 - 4
+        height: parent.height * 0.1
+        text: "change"
+
+        onClicked: {
+            let str = firLangBox.lang
+            firLangBox.lang = secLangBox.lang
+            secLangBox.lang = str
+
+            str = firTextBox.text
+            firTextBox.text = secTextBox.text
+            secTextBox.text = str
+        }
+    }
+
     LangBox {
+        id: firLangBox
         x: 2
         y: 2
-        width: parent.width * 0.5 - 2
+        width: parent.width * 0.4 - 2
         height: parent.height * 0.1
         lang: "lat"
     }
     LangBox {
-        x: parent.width * 0.5
+        id: secLangBox
+        x: parent.width * 0.6
         y: 2
-        width: parent.width * 0.5 - 2
+        width: parent.width * 0.4 - 2
         height: parent.height * 0.1
         lang: "mor"
     }
 
     TextBox {
-        id: latTextBox
+        id: firTextBox
         x: 2
         y: parent.height * 0.1 + 4
         width: parent.width * 0.5 - 2
@@ -45,13 +66,13 @@ Window {
         readonly: false
 
         onBoxTextChanged: {
-            console.log("lat", code, text.length, text)
-            MCore.changeString("lat", code, text)
+            console.log(69, firLangBox.lang, code, position, text.length, text)
+            MCore.changeString(firLangBox.lang, code, position, text)
         }
     }
 
     TextBox {
-        id: morzeTextBox
+        id: secTextBox
         x: parent.width * 0.5
         y: parent.height * 0.1 + 4
         width: parent.width * 0.5 - 2
@@ -59,8 +80,8 @@ Window {
         readonly: true
 
         onBoxTextChanged: {
-            console.log("mor", code, text)
-            MCore.changeString("mor", code, text.length, text)
+            console.log(secLangBox.lang, code, text)
+            MCore.changeString(secLangBox.lang, code, text.length, text)
         }
     }
 }
