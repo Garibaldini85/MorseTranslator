@@ -23,8 +23,8 @@ private:
     QString extraMorze (const QChar & chr);
 
 public slots:
-    void latOneChanging(const QString &text);
-    void latSevChanging(const QString &text);
+    void latOneChanging(const QString &text, const int &position);
+    void latSevChanging(const QString &text, const int &position);
 
 signals:
     void retStr(QString str);
