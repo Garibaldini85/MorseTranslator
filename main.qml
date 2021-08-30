@@ -37,6 +37,8 @@ Window {
             str = firTextBox.text
             firTextBox.text = secTextBox.text
             secTextBox.text = str
+
+            firTextBox.clearOldString()
         }
     }
 
@@ -64,6 +66,7 @@ Window {
         width: parent.width * 0.5 - 2
         height: parent.height * 0.9 - 4
         readonly: false
+        emitting: true
 
         onBoxTextChanged: {
             console.log(69, firLangBox.lang, code, position, text.length, text)
@@ -78,6 +81,7 @@ Window {
         width: parent.width * 0.5 - 2
         height: parent.height * 0.9 - 4
         readonly: true
+        emitting: false
 
         onBoxTextChanged: {
             console.log(secLangBox.lang, code, text)

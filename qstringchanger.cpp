@@ -2,13 +2,14 @@
 
 QStringChanger::QStringChanger(QObject *parent) : QObject(parent)
 {
-    oldText  = QString();
+    oldText  = QLinkedList <QChar>();
     oldMorze = QLinkedList <QString>();
 }
 
 QString QStringChanger::textToMorze()
 {
     QString retStr;
+
     for (auto iter: oldMorze) {
         if (retStr.isEmpty()) {
             retStr += iter;
@@ -20,12 +21,41 @@ QString QStringChanger::textToMorze()
             retStr += iter;
         }
     }
+
     return retStr;
 }
 
 QString QStringChanger::morzeToText()
 {
-    return oldText;
+    QString retStr, addMorze;
+
+    for (auto iter: oldMorzeChar) {
+        if (iter == ' ') {
+            int ind = morze.indexOf(addMorze);
+            if (ind != -1)
+                if (ind != lat.size() - 1)
+                    retStr += lat[ind];
+                else
+                    retStr.resize(retStr.size() - 1);
+            else
+                retStr += addMorze;
+            addMorze.clear();
+            retStr += ' ';
+        } else {
+            addMorze += iter;
+        }
+    }
+
+    QChar c = *(oldMorzeChar.begin() + oldMorzeChar.size() - 1);
+    if (*(oldMorzeChar.begin() + oldMorzeChar.size() - 1) != ' ') {
+        int ind = morze.indexOf(addMorze);
+        if (ind != -1)
+            retStr += lat[ind];
+        else
+            retStr += addMorze;
+    }
+
+    return retStr;
 }
 
 QString QStringChanger::extraSymbol(const QString & str)
@@ -50,10 +80,10 @@ void QStringChanger::latOneChanging(const QString &text, const int &position)
 {
     if (oldText.size() < text.size()) {
         oldMorze.insert(oldMorze.begin() + position - 1, extraMorze(text[position - 1]));
-        oldText.insert(position - 1, text[position - 1]);
+        oldText.insert(oldText.begin() + position - 1, text[position - 1]);
     } else {
         oldMorze.erase(oldMorze.begin() + position);
-        oldText.remove(position, 1);
+        oldText.erase(oldText.begin() + position);
     }
 
     emit retStr(textToMorze());
@@ -65,15 +95,48 @@ void QStringChanger::latSevChanging(const QString &text, const int &position)
         int _position = position - (text.size() - oldText.size());
         while (oldText.size() < text.size()) {
             oldMorze.insert(oldMorze.begin() + _position, extraMorze(text[_position]));
-            oldText.insert(_position, text[_position]);
+            oldText.insert(oldText.begin() + _position, text[_position]);
             _position += 1;
         }
     } else {
-        int _position = position;
         while (oldText.size() > text.size()) {
-            oldMorze.erase(oldMorze.begin() + _position);
-            oldText.remove(_position, 1);
+            oldMorze.erase(oldMorze.begin() + position);
+            oldText.erase(oldText.begin() + position);
         }
     }
     emit retStr(textToMorze());
+}
+
+void QStringChanger::morOneChanging(const QString &morze, const int &position)
+{
+    if (oldMorzeChar.size() < morze.size()) {
+        oldMorzeChar.insert(oldMorzeChar.begin() + position - 1, morze[position - 1]);
+    } else {
+        oldMorzeChar.erase(oldMorzeChar.begin() + position);
+    }
+
+    emit retStr(morzeToText());
+}
+
+void QStringChanger::morSevChanging(const QString &morze, const int &position)
+{
+    if (oldMorzeChar.size() < morze.size()) {
+        int _position = position - (morze.size() - oldMorzeChar.size());
+        while (oldMorzeChar.size() < morze.size()) {
+            oldMorzeChar.insert(oldMorzeChar.begin() + _position, morze[_position]);
+            _position += 1;
+        }
+    } else {
+        while (oldMorzeChar.size() > morze.size()) {
+            oldMorzeChar.erase(oldMorzeChar.begin() + position);
+        }
+    }
+    emit retStr(morzeToText());
+}
+
+void QStringChanger::clearStrList()
+{
+    oldMorze.clear();
+    oldMorzeChar.clear();
+    oldText.clear();
 }

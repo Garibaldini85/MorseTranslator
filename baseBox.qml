@@ -16,8 +16,7 @@ Item {
 
     /* code 0, 1, 2
      * 0 changing one symbol
-     * 1 past
-     * 2 cut
+     * 1 past/cut
      */
     signal baseTextChanged(int code, int basePosition, string baseText)
 

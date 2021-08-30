@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QLinkedList>
+#include <QRegExp>
 
 class QStringChanger : public QObject
 {
@@ -13,9 +14,9 @@ public:
 private:
     QList<QChar> lat  = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', ' '};
     QStringList morze = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.",
-                        "--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--..","-···-"};
-    QString oldText;
+                        "--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--..","-...-"};
     QLinkedList <QString> oldMorze;
+    QLinkedList <QChar>   oldMorzeChar, oldText;
 
     QString textToMorze();
     QString morzeToText();
@@ -25,6 +26,9 @@ private:
 public slots:
     void latOneChanging(const QString &text, const int &position);
     void latSevChanging(const QString &text, const int &position);
+    void morOneChanging(const QString &morze,const int &position);
+    void morSevChanging(const QString &morze,const int &position);
+    void clearStrList();
 
 signals:
     void retStr(QString str);
