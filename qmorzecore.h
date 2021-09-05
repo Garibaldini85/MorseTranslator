@@ -18,9 +18,13 @@ private:
 public slots:
     void changeString(QString lang, int code, int position, QString text);
     void recStr(QString str);
+    void recNewTask(int from, int to);
+    void recChangesTask(int value);
 
 signals:
     void sendStrToQml(QString str);
+    void sendValueToProgressBar(int value);
+    void sendDataToProgressBar(int from, int to);
 
 };
 

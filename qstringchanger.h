@@ -12,9 +12,9 @@ public:
     explicit QStringChanger(QObject *parent = nullptr);
 
 private:
-    QList<QChar> lat  = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', ' '};
+    QList<QChar> lat  = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z', ' ', '.', '-'};
     QStringList morze = {".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.",
-                        "--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--..","-...-"};
+                        "--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--..","-...-", "......", "-....-"};
     QLinkedList <QString> oldMorze;
     QLinkedList <QChar>   oldMorzeChar, oldText;
 
@@ -22,6 +22,8 @@ private:
     QString morzeToText();
     QString extraSymbol(const QString & str);
     QString extraMorze (const QChar & chr);
+    void    createNewTask(const int & sizeNew, const int & sizeOld);
+    void check(QString text);
 
 public slots:
     void latOneChanging(const QString &text, const int &position);
@@ -32,6 +34,8 @@ public slots:
 
 signals:
     void retStr(QString str);
+    void createTask(int from, int to);
+    void changeTask(int value);
 
 };
 

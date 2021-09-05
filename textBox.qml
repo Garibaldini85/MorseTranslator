@@ -3,15 +3,16 @@ import QtQuick 2.0
 import "qml.qrc:/BaseBox.qml"
 
 Item {
-    property string text    : ""
-    property bool   readonly: false
-    property bool   emitting: true
+    property string text          : ""
+    property string holderBaseText: ""
+    property bool   readonly      : false
+    property bool   emitting      : true
 
     signal boxTextChanged (int code, int position, string text)
 
     function clearOldString() {
         baseBox.oldString = ""
-        baseBox.baseTextChanged(1, text.length, text)
+        baseBox.baseTextChanged(1, 0, text)
     }
 
     BaseBox {
@@ -23,6 +24,7 @@ Item {
         horAlig: Text.AlignLeft
         verAlig: Text.AlignTop
         isSelecting: true
+        holderText: holderBaseText
         onBaseTextChanged: {
             boxTextChanged (code, basePosition, baseText)
         }
